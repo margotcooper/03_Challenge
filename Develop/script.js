@@ -1,148 +1,102 @@
 // Assignment code here
 //assign variables for different password options
 // var password = ;
-var alphaLow = [
-  "a",
-  "b",
-  "c",
-  "d",
-  "e",
-  "f",
-  "g",
-  "h",
-  "i",
-  "j",
-  "k",
-  "l",
-  "m",
-  "n",
-  "o",
-  "p",
-  "q",
-  "r",
-  "s",
-  "t",
-  "u",
-  "v",
-  "w",
-  "x",
-  "y",
-  "z",
-];
-var alphaHigh = [
-  "A",
-  "B",
-  "C",
-  "D",
-  "E",
-  "F",
-  "G",
-  "H",
-  "I",
-  "J",
-  "K",
-  "L",
-  "M",
-  "N",
-  "O",
-  "P",
-  "Q",
-  "R",
-  "S",
-  "T",
-  "U",
-  "V",
-  "W",
-  "X",
-  "Y",
-  "Z",
-];
-var nums = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"];
-var speChars = [
-  "#",
-  "$",
-  "%",
-  "&",
-  "'",
-  "(",
-  ")",
-  "*",
-  "+",
-  ",",
-  "-",
-  ".",
-  "/",
-  ":",
-  ";",
-  "<",
-  "=",
-  ">",
-  "?",
-  "@",
-  "[",
-  "]",
-  "^",
-  "_",
-  "`",
-  "{",
-  "|",
-  "}",
-  "~",
-];
+var alphaLow = "abcdefghijklmnopqrstuvwxyz";
+var alphaHigh = alphaLow.toUpperCase();
+var nums = "0123456789";
+var speChars = "#$%&'()*+,-./:;<=>?@[]^_`{|}~";
 
-//prompt user for each option, add to 'usable' array if user agrees/wants
+//[
+//   "#",
+//   "$",
+//   "%",
+//   "&",
+//   "'",
+//   "(",
+//   ")",
+//   "*",
+//   "+",
+//   ",",
+//   "-",
+//   ".",
+//   "/",
+//   ":",
+//   ";",
+//   "<",
+//   "=",
+//   ">",
+//   "?",
+//   "@",
+//   "[",
+//   "]",
+//   "^",
+//   "_",
+//   "`",
+//   "{",
+//   "|",
+//   "}",
+//   "~",
+// ];
+var passLength;
+var passwordList = "";
+var password = "";
+//prompt user for each option, add to 'passwordList' array if user agrees/wants
+
 var passOps = function () {
-  var usable = [];
-  var length = prompt(
+  //password is keeping track of final product, passwordList is keeping track of approved characters (passwordList)
+  passLength = prompt(
     "How many characters should the password be? (Between 8 - 128)"
   );
-  if (length >= 8 && length <= 128) {
-  } else if (length < 8 || length > 128) {
-    passOps();
+
+  while (passLength < 8 || passLength > 128 || isNaN(passLength)) {
+    alert("Valid number not entered");
+    passLength = prompt(
+      "How many characters should the password be? (Between 8 - 128)"
+    );
   }
   var caps = confirm("Use uppercase letters?");
   var lower = confirm("Use lowercase letters?");
   var numbers = confirm("Use numbers?");
   var special = confirm("Use special characters?");
   if (caps === true) {
-    usable = usable.concat(alphaHigh);
-    console.log(usable);
+    passwordList += alphaHigh;
   }
   if (lower === true) {
-    usable.concat(alphaLow);
-    console.log(usable);
+    passwordList += alphaLow;
   }
   if (numbers === true) {
-    usable.concat(nums);
-    console.log(usable);
+    passwordList += nums;
   }
   if (special === true) {
-    usable.concat(speChars);
-    console.log(usable);
+    passwordList += speChars;
   }
-  console.log(usable);
-  return usable;
+  return passwordList;
 };
 
 function generatePassword() {
   passOps();
-}
-//loop through for the length to make characters generate for each position in the password
-for (let i = 1; i == length; i++) {
-  const passwordText = usable[Math.floor(Math.random() * length)];
-}
 
+  //loop through for the length to make characters generate for each position in the
+  if (passLength > 0) {
+    for (var i = 0; i <= passLength; i++) {
+      password += passwordList[Math.floor(Math.random() * passLength)];
+      console.log(password);
+    }
+
+    var passwordText = document.querySelector("#password");
+    passwordText.value = password;
+  }
+}
+generatePassword();
 // Get references to the #generate element
 var generateBtn = document.querySelector("#generate");
 
 // Write password to the #password input
-function writePassword() {
-  console.log("writePassword");
-  var password = generatePassword();
-  var passwordText = document.querySelector("#password");
-
-  passwordText.value = password;
-}
+// function writePassword() {
+//   // console.log("writePassword");
+//   var password = generatePassword();
+//   var passwordText =
+// }
 
 // Add event listener to generate button
-generateBtn.addEventListener("click", writePassword);
+generateBtn.addEventListener("click", generatePassword);
