@@ -49,7 +49,7 @@ function generatePassword() {
   //loop through for the length to make characters generate for each position in the password
   if (passLength > 0) {
     for (var i = 0; i <= passLength; i++) {
-      password += passwordList[Math.floor(Math.random() * passLength)];
+      password += passwordList[Math.floor(Math.random() * passwordList.length)];
       console.log(password);
     }
 
